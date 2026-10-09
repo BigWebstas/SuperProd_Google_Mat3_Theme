@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Material 3 Theme - Super Productivity Preview</title>
+  <link rel="stylesheet" id="theme-stylesheet" href="google-material-3.css">
+  <style>
+    /* Preview Host Chrome & Demonstration Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-primary-stack);
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+      overflow-x: hidden;
+    }
+
+    /* Preview Top Control Bar */
+    .preview-control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 24px;
+      background: var(--surface-3);
+      border-bottom: 1px solid var(--divider);
+      z-index: 1000;
+      box-shadow: var(--m3-shadow-1);
+    }
+
+    .preview-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--ink-strong);
+    }
+
+    .preview-brand .logo-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--brand);
+      color: var(--surface-0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--ink-muted);
+    }
+
+    select.m3-select {
+      background: var(--surface-0);
+      color: var(--ink);
+      border: 1px solid var(--divider);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .theme-mode-toggle {
+      display: flex;
+      align-items: center;
+      background: var(--surface-0);
+      border: 1px solid var(--divider);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      cursor: pointer;
+      gap: 6px;
+    }
+
+    .theme-mode-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .theme-mode-btn.active {
+      background: var(--brand);
+      color: var(--surface-0);
+      font-weight: 600;
+    }
+
+    /* App Layout Simulation */
+    .app-layout {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 65px);
+      overflow: hidden;
+    }
+
+    /* Side Nav Mock */
+    .side-nav {
+      width: 260px;
+      background: var(--surface-1);
+      border-right: 1px solid var(--divider);
+      display: flex;
+      flex-direction: column;
+      padding: 16px 8px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .nav-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--ink-muted);
+      padding: 12px 16px 6px;
+    }
+
+    .side-nav nav-item a,
+    .side-nav .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--sidenav-text);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 28px;
+      padding: 10px 16px;
+      margin: 2px 4px;
+      transition: background-color var(--transition-fast), color var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .side-nav nav-item.isActive a,
+    .side-nav .nav-link.active {
+      background: var(--sidenav-item-active-bg);
+      color: var(--sidenav-active-text);
+      font-weight: 600;
+    }
+
+    .nav-count {
+      margin-left: auto;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(var(--ink-on-channel), 0.08);
+      color: var(--ink-muted);
+    }
+
+    .active .nav-count {
+      background: var(--brand);
+      color: var(--surface-0);
+    }
+
+    /* Main Content Area */
+    .main-viewport {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: var(--bg);
+      padding: 24px 32px;
+    }
+
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .main-header h1 {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink-strong);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Add Task Bar Simulation */
+    .add-task-bar {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .add-task-bar .box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--divider);
+      border-radius: 28px;
+      box-shadow: var(--m3-shadow-1);
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .add-task-bar .box:focus-within {
+      box-shadow: var(--m3-shadow-2);
+      border-color: var(--brand);
+    }
+
+    .add-task-bar input {
+      border: none;
+      background: transparent;
+      color: var(--ink);
+      font-size: 15px;
+      font-family: inherit;
+      flex: 1;
+      outline: none;
+    }
+
+    .add-task-bar input::placeholder {
+      color: var(--ink-muted);
+    }
+
+    /* Task Cards Container */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Task Card Component Mock */
+    .mock-task {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .mock-task .box {
+      display: flex;
+      flex-direction: column;
+      background: var(--task-c-bg);
+      border: var(--task-border);
+      border-radius: var(--task-border-radius);
+      box-shadow: var(--task-shadow);
+      padding: 14px 18px;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .mock-task:hover:not(.isCurrent):not(.isSelected) .box {
+      background: var(--surface-3);
+      box-shadow: var(--m3-shadow-2);
+    }
+
+    .mock-task.isCurrent .box {
+      background: var(--task-c-current-bg) !important;
+      outline: 2px solid var(--brand);
+      box-shadow: var(--task-current-shadow);
+    }
+
+    .mock-task.isSelected .box {
+      background: var(--task-c-selected-bg) !important;
+      box-shadow: var(--task-selected-shadow);
+    }
+
+    .mock-task.isDone .box {
+      background: var(--task-c-bg-done);
+      opacity: var(--task-is-done-dim-opacity);
+    }
+
+    .task-row-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .task-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--c-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .mock-task.isDone .task-checkbox {
+      background: var(--c-accent);
+      color: var(--surface-0);
+    }
+
+    .task-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      flex: 1;
+    }
+
+    .mock-task.isDone .task-title {
+      text-decoration: line-through;
+    }
+
+    .task-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .m3-chip {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 500;
+      background: rgba(var(--ink-on-channel), 0.08);
+      color: var(--ink-muted);
+      border: 1px solid var(--chip-outline-color);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .m3-chip.primary {
+      background: var(--sidenav-item-active-bg);
+      color: var(--sidenav-active-text);
+      border-color: transparent;
+    }
+
+    .task-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .subtask-group {
+      margin-top: 10px;
+      margin-left: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mock-subtask .box {
+      padding: 10px 14px;
+      background: var(--sub-task-c-bg);
+      border: 1px solid var(--sub-task-border-color);
+      border-radius: 10px;
+    }
+
+    /* M3 Floating Action Button (FAB) */
+    .mock-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--brand);
+      color: var(--surface-0);
+      box-shadow: var(--m3-shadow-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition-fast);
+      z-index: 100;
+    }
+
+    .mock-fab:hover {
+      box-shadow: var(--m3-shadow-3);
+      transform: scale(1.05);
+    }
+
+    /* M3 Pill Buttons */
+    .m3-btn {
+      border: none;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-fast);
+    }
+
+    .m3-btn.filled {
+      background: var(--brand);
+      color: var(--surface-0);
+    }
+
+    .m3-btn.tonal {
+      background: var(--sidenav-item-active-bg);
+      color: var(--sidenav-active-text);
+    }
+
+    .m3-btn.outlined {
+      background: transparent;
+      border: 1px solid var(--divider);
+      color: var(--brand);
+    }
+
+    /* Dialog Showcase Preview */
+    .demo-dialog-banner {
+      margin-top: 28px;
+      background: var(--surface-3);
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid var(--divider);
+      box-shadow: var(--m3-shadow-2);
+      max-width: 650px;
+    }
+
+    .dialog-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ink-strong);
+      margin-bottom: 8px;
+    }
+
+    .dialog-desc {
+      font-size: 14px;
+      color: var(--ink-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .dialog-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preview Control Bar -->
+  <header class="preview-control-bar">
+    <div class="preview-brand">
+      <div class="logo-icon">✓</div>
+      <span>Super Productivity &bull; Google Material 3</span>
+    </div>
+
+    <div class="preview-controls">
+      <div class="control-group">
+        <label for="palette-select">Color Scheme:</label>
+        <select id="palette-select" class="m3-select" onchange="switchThemeFile(this.value)">
+          <option value="google-material-3.css" selected>Baseline Google Blue (Default)</option>
+          <option value="google-material-3-sage.css">Organic Sage Green</option>
+          <option value="google-material-3-coral.css">Expressive Coral / Terracotta</option>
+          <option value="google-material-3-lavender.css">Evening Lavender / Amethyst</option>
+          <option value="google-material-3-monochrome.css">Executive Monochrome</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <div class="theme-mode-toggle">
+          <button id="btn-light" class="theme-mode-btn active" onclick="setMode('light')">☀️ Light</button>
+          <button id="btn-dark" class="theme-mode-btn" onclick="setMode('dark')">🌙 Dark</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Simulation Layout -->
+  <div class="app-layout">
+    <!-- Side Nav Navigation Drawer -->
+    <aside class="side-nav">
+      <div class="nav-section-title">Views</div>
+      <div class="nav-link active">
+        <span>📅</span>
+        <span>Today</span>
+        <span class="nav-count">4</span>
+      </div>
+      <div class="nav-link">
+        <span>⭐</span>
+        <span>Next Sprint</span>
+        <span class="nav-count">8</span>
+      </div>
+      <div class="nav-link">
+        <span>📊</span>
+        <span>Worklog & Metrics</span>
+      </div>
+
+      <div class="nav-section-title" style="margin-top: 12px;">Projects</div>
+      <div class="nav-link">
+        <span>🔵</span>
+        <span>Material 3 Redesign</span>
+        <span class="nav-count">12</span>
+      </div>
+      <div class="nav-link">
+        <span>🟢</span>
+        <span>Backend Architecture</span>
+        <span class="nav-count">5</span>
+      </div>
+      <div class="nav-link">
+        <span>🟣</span>
+        <span>Product Research</span>
+        <span class="nav-count">3</span>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="main-viewport">
+      <div class="main-header">
+        <h1>
+          <span>Today's Priorities</span>
+          <span class="m3-chip primary">Focused</span>
+        </h1>
+        <div class="header-actions">
+          <button class="m3-btn tonal">⏱️ 25:00 Pomodoro</button>
+          <button class="m3-btn outlined">Settings</button>
+        </div>
+      </div>
+
+      <!-- Add Task Floating Bar -->
+      <div class="add-task-bar">
+        <div class="box">
+          <span style="font-size: 18px; color: var(--brand);">➕</span>
+          <input type="text" placeholder="Add task or paste link to create issue... (Press Enter to save)">
+          <span class="m3-chip">Press Enter</span>
+        </div>
+      </div>
+
+      <!-- Tasks List -->
+      <div class="task-list">
+
+        <!-- Active / Current Running Task Card -->
+        <div class="mock-task isCurrent">
+          <div class="box">
+            <div class="task-row-main">
+              <div class="task-checkbox" style="border-color: var(--brand); background: var(--brand); color: white;">▶</div>
+              <div class="task-title" style="font-weight: 600;">Implement Google Material 3 Design Tokens for Super Productivity</div>
+              <div class="task-tags">
+                <span class="m3-chip primary">#DesignSystem</span>
+                <span class="m3-chip">P1</span>
+              </div>
+              <div class="task-meta">
+                <span style="color: var(--brand); font-weight: 600;">⏱️ 00:24:12 / 01:00:00</span>
+              </div>
+            </div>
+            <!-- Nested Subtasks -->
+            <div class="subtask-group">
+              <div class="mock-subtask">
+                <div class="box">
+                  <div class="task-row-main">
+                    <div class="task-checkbox" style="width: 18px; height: 18px; font-size: 11px;">✓</div>
+                    <div class="task-title" style="font-size: 13px;">Map Tonal Surface Ladder (Surface 0-4)</div>
+                    <span class="m3-chip" style="font-size: 11px;">Done</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-subtask">
+                <div class="box">
+                  <div class="task-row-main">
+                    <div class="task-checkbox" style="width: 18px; height: 18px;"></div>
+                    <div class="task-title" style="font-size: 13px;">Style Squircle FAB (16px radius) & Pill Buttons</div>
+                    <span class="m3-chip" style="font-size: 11px;">In Progress</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selected Task Card -->
+        <div class="mock-task isSelected">
+          <div class="box">
+            <div class="task-row-main">
+              <div class="task-checkbox"></div>
+              <div class="task-title">Review Color Contrast & WCAG AA Compliance for Dark Mode</div>
+              <div class="task-tags">
+                <span class="m3-chip">#Accessibility</span>
+              </div>
+              <div class="task-meta">
+                <span>⏱️ 00:00:00 / 00:45:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Normal Task Card -->
+        <div class="mock-task">
+          <div class="box">
+            <div class="task-row-main">
+              <div class="task-checkbox"></div>
+              <div class="task-title">Test Theme Import via Super Productivity Settings &bull; Install Theme</div>
+              <div class="task-tags">
+                <span class="m3-chip">#QA</span>
+              </div>
+              <div class="task-meta">
+                <span>⏱️ 00:00:00 / 00:30:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Completed Task Card -->
+        <div class="mock-task isDone">
+          <div class="box">
+            <div class="task-row-main">
+              <div class="task-checkbox">✓</div>
+              <div class="task-title">Extract Super Productivity Theme Validation Contract</div>
+              <div class="task-tags">
+                <span class="m3-chip">Completed</span>
+              </div>
+              <div class="task-meta">
+                <span>⏱️ 00:18:40 / 00:20:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dialog Showcase Preview -->
+      <div class="demo-dialog-banner">
+        <div class="dialog-title">Material 3 Dialog & Container Elevation</div>
+        <div class="dialog-desc">
+          Material 3 utilizes tonal surface tinting and generous 28px curved corners for modal dialogs and elevated containers. All components seamlessly adapt between light and dark modes with zero contrast degradation.
+        </div>
+        <div class="dialog-buttons">
+          <button class="m3-btn outlined">Learn More</button>
+          <button class="m3-btn filled">Confirm & Proceed</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="mock-fab" title="Quick Add Task">+</button>
+
+  <script>
+    function switchThemeFile(filename) {
+      const link = document.getElementById('theme-stylesheet');
+      link.href = filename;
+    }
+
+    function setMode(mode) {
+      const btnLight = document.getElementById('btn-light');
+      const btnDark = document.getElementById('btn-dark');
+
+      if (mode === 'dark') {
+        document.body.classList.add('isDarkTheme');
+        document.body.classList.remove('isLightTheme');
+        btnDark.classList.add('active');
+        btnLight.classList.remove('active');
+      } else {
+        document.body.classList.remove('isDarkTheme');
+        document.body.classList.add('isLightTheme');
+        btnLight.classList.add('active');
+        btnDark.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

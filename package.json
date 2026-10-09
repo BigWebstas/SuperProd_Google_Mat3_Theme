@@ -1,0 +1,22 @@
+{
+  "name": "super-productivity-google-material-3-themes",
+  "version": "1.0.0",
+  "description": "Google Material 3 (Material You) Theme Suite for Super Productivity",
+  "main": "google-material-3.css",
+  "scripts": {
+    "test": "node scripts/validate-theme.js google-material-3.css google-material-3-sage.css google-material-3-coral.css google-material-3-lavender.css google-material-3-monochrome.css",
+    "validate": "node scripts/validate-theme.js",
+    "preview": "node -e \"const http=require('http'), fs=require('fs'), path=require('path'); http.createServer((req,res)=>{ let f=req.url==='/'?'preview.html':req.url.slice(1); if(fs.existsSync(f)){ res.writeHead(200,{'Content-Type':f.endsWith('.css')?'text/css':'text/html'}); fs.createReadStream(f).pipe(res); } else { res.writeHead(404); res.end('Not found'); } }).listen(3000, ()=>console.log('Preview server running at http://localhost:3000'));\""
+  },
+  "keywords": [
+    "super-productivity",
+    "theme",
+    "material-3",
+    "material-you",
+    "m3",
+    "css",
+    "google-material"
+  ],
+  "author": "Super Productivity Community",
+  "license": "MIT"
+}

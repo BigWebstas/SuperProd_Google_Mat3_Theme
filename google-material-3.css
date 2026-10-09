@@ -1,0 +1,634 @@
+/**
+ * Google Material 3 (Material You) Theme for Super Productivity
+ *
+ * Designed according to official Google Material Design 3 specifications:
+ * - Dynamic Tonal Surface Elevation ladder (surface-container-lowest to highest)
+ * - Google Baseline Blue (Workspace / Pixel) color system
+ * - M3 Shapes: 16px / 28px rounded corners and full-pill interactive elements
+ * - M3 Squircle Floating Action Buttons (16px radius)
+ * - M3 Navigation Drawer with pill-shaped active indicator
+ * - Elevated container task cards with distinct resting, hover, active, and completed states
+ * - Fully responsive: Seamless Light and Dark mode switching
+ *
+ * Contract compliant with Super Productivity theming engine.
+ */
+
+/* ==========================================================================
+   ROOT: MOTION & ELEVATION TIMINGS
+   ========================================================================== */
+:root {
+  /* Google Material 3 Easing & Motion Curves */
+  --ani-standard-timing: cubic-bezier(0.2, 0.0, 0, 1.0);
+  --ani-enter-timing: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --ani-leave-timing: cubic-bezier(0.3, 0.0, 0.8, 0.15);
+  --transition-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-normal: 250ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-standard: all 225ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* Google Font Stack with modern system fallbacks */
+  --font-primary-stack: 'Google Sans', 'Google Sans Text', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* Material 3 Radius Scale */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-xxl: 28px;
+  --radius-pill: 9999px;
+  --card-border-radius: 16px;
+  --input-border-radius: 12px;
+  --task-border-radius: 14px;
+
+  /* Material 3 Elevation Shadows */
+  --m3-shadow-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.18);
+  --m3-shadow-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.18);
+  --m3-shadow-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.20);
+}
+
+/* ==========================================================================
+   LIGHT MODE: GOOGLE MATERIAL 3 SPECIFICATION
+   ========================================================================== */
+body {
+  /* ===============================
+   * 1. THEME CONTRACT PRIMITIVES
+   * =============================== */
+  /* M3 Tonal Surface Ladder (Light) */
+  --surface-0: #ffffff; /* Surface Container Lowest / Pure White */
+  --surface-1: #f8f9fa; /* Surface (Google Canvas Background) */
+  --surface-2: #edf2f7; /* Surface Container (Default Cards & Panels) */
+  --surface-3: #e3e8ef; /* Surface Container High (Elevated & Active States) */
+  --surface-4: #dfe3eb; /* Surface Container Highest (Modals & Banners) */
+
+  /* M3 Ink & Typography (Light) */
+  --ink: #1f1f1f;                 /* On-Surface (High emphasis text) */
+  --ink-strong: #111111;          /* On-Surface (Maximum emphasis headings) */
+  --ink-muted: #444746;           /* On-Surface Variant (Secondary / Helper text) */
+  --ink-on-channel: 31, 31, 31;   /* Keystone RGB triplet for state overlays */
+
+  /* M3 Separators, Scrim & Overlays (Light) */
+  --separator: #e0e2e8;                       /* Soft row divider */
+  --divider: #c4c7c5;                         /* Outline-Variant */
+  --scrim: rgba(0, 0, 0, 0.45);               /* Dialog modal backdrop */
+  --bg-overlay: rgba(248, 249, 250, 0.88);    /* Frosted overlay */
+
+  /* M3 Brand & Accent Colors (Light - Google Baseline Blue) */
+  --brand: #0b57d0;                           /* Google Primary Blue (Key color) */
+  --focus-ring: #0b57d0;                      /* Focused outline */
+  --system-surface: #f8f9fa;                  /* Android / System bar background */
+
+  --c-primary: #0b57d0;
+  --c-accent: #00639b;
+  --c-warn: #ba1a1a;
+
+  /* Material 3 Semantic Color Roles (Light) */
+  --md-sys-color-primary: #0b57d0;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #d3e3fd;
+  --md-sys-color-on-primary-container: #041e49;
+  --md-sys-color-secondary: #535f70;
+  --md-sys-color-secondary-container: #c2e7ff;
+  --md-sys-color-on-secondary-container: #001d35;
+  --md-sys-color-tertiary: #6b5778;
+  --md-sys-color-tertiary-container: #f3daff;
+  --md-sys-color-on-tertiary-container: #251431;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-outline: #747775;
+  --md-sys-color-outline-variant: #c4c7c5;
+
+  /* ===============================
+   * 2. MATERIAL PALETTE LADDERS
+   * =============================== */
+  --palette-primary-50: #f0f4fd;
+  --palette-primary-100: #d3e3fd;
+  --palette-primary-200: #a8c7fa;
+  --palette-primary-300: #7cacf8;
+  --palette-primary-400: #4c8df6;
+  --palette-primary-500: #0b57d0;
+  --palette-primary-600: #0842a0;
+  --palette-primary-700: #06327a;
+  --palette-primary-800: #042457;
+  --palette-primary-900: #021535;
+  --palette-primary-contrast-500: #ffffff;
+
+  --palette-accent-100: #c2e7ff;
+  --palette-accent-200: #9cd4ff;
+  --palette-accent-300: #76c0fe;
+  --palette-accent-400: #4facfd;
+  --palette-accent-500: #00639b;
+  --palette-accent-600: #004d7a;
+  --palette-accent-700: #003859;
+  --palette-accent-contrast-500: #ffffff;
+
+  /* ===============================
+   * 3. M3 INTERACTION STATE TOKENS
+   * =============================== */
+  --state-hover-alpha: 0.08;
+  --state-focus-alpha: 0.12;
+  --state-pressed-alpha: 0.12;
+  --state-selected-alpha: 0.12;
+  --state-disabled-alpha: 0.38;
+
+  /* Legacy Opacity Fallbacks */
+  --hover-bg-opacity: 0.08;
+  --focus-bg-opacity: 0.12;
+  --pressed-bg-opacity: 0.12;
+  --disabled-opacity: 0.38;
+
+  /* ===============================
+   * 4. APP & COMPONENT BACKGROUNDS
+   * =============================== */
+  --bg: var(--surface-1);
+  --bg-darker: var(--surface-0);
+  --bg-slightly-lighter: #ffffff;
+  --bg-lighter: var(--surface-2);
+  --bg-lightest: var(--surface-3);
+  --bg-super-light: var(--surface-0);
+  --card-bg: var(--surface-2);
+  --card-shadow: var(--m3-shadow-1);
+
+  /* Navigation Drawer (Sidenav) */
+  --sidenav-bg: var(--surface-1);
+  --sidenav-bg-mobile: var(--surface-1);
+  --sidenav-text: var(--ink-muted);
+  --sidenav-text-hover: var(--ink-strong);
+  --sidenav-text-secondary: var(--ink-muted);
+  --sidenav-active-text: #041e49;
+  --sidenav-item-active-bg: #c2e7ff;
+  --sidenav-hover-bg: rgba(var(--ink-on-channel), 0.06);
+
+  /* Task Container Cards */
+  --task-c-bg: var(--surface-2);
+  --task-c-current-bg: #d3e3fd;
+  --task-c-selected-bg: #e2ebf8;
+  --task-c-multi-selected-bg: #d3e3fd;
+  --task-c-drag-drop-bg: var(--surface-3);
+  --task-c-bg-done: #f1f3f4;
+  --task-is-done-dim-opacity: 0.45;
+  --task-border: 1px solid var(--md-sys-color-outline-variant);
+  --task-separator: none;
+  --task-list-row-gap: 8px;
+  --task-shadow: var(--m3-shadow-1);
+  --task-current-shadow: var(--m3-shadow-2);
+  --task-selected-shadow: var(--m3-shadow-1);
+  --task-shadow-sub-task: none;
+
+  /* Subtask Containers */
+  --sub-task-c-bg: var(--surface-0);
+  --sub-task-c-bg-done: #f1f3f4;
+  --sub-task-c-bg-in-selected: #eaf1fb;
+  --sub-task-border-color: var(--md-sys-color-outline-variant);
+
+  /* Action Buttons */
+  --button-primary-label: #0b57d0;
+  --button-accent-label: #00639b;
+  --button-warn-label: #ba1a1a;
+
+  /* Notes & Details */
+  --standard-note-bg: var(--surface-0);
+  --standard-note-fg: var(--ink);
+  --standard-note-bg-hovered: var(--surface-2);
+  --task-detail-bg: var(--surface-0);
+  --task-detail-bg-hover: var(--surface-2);
+  --task-detail-value-color: var(--ink-muted);
+
+  /* Chips, Badges & Inputs */
+  --chip-outline-color: var(--md-sys-color-outline-variant);
+  --progress-bg: rgba(var(--ink-on-channel), 0.12);
+  --input-bg: rgba(var(--ink-on-channel), 0.04);
+  --input-bg-hover: rgba(var(--ink-on-channel), 0.08);
+  --input-border-color: var(--md-sys-color-outline-variant);
+
+  /* Banners, Toolbars & Panels */
+  --banner-bg: var(--surface-3);
+  --banner-shadow: var(--m3-shadow-2);
+  --improvement-text: var(--ink-strong);
+  --improvement-border: var(--md-sys-color-primary-container);
+  --improvement-button-text: #041e49;
+  --close-btn-bg: var(--surface-3);
+  --close-btn-border: transparent;
+  --link-color: #0b57d0;
+
+  /* Scrollbars */
+  --scrollbar-thumb: #b0b4ba;
+  --scrollbar-thumb-hover: #74777f;
+  --scrollbar-track: transparent;
+}
+
+/* ==========================================================================
+   DARK MODE: GOOGLE MATERIAL 3 SPECIFICATION
+   ========================================================================== */
+body.isDarkTheme {
+  /* ===============================
+   * 1. THEME CONTRACT PRIMITIVES
+   * =============================== */
+  /* M3 Tonal Surface Ladder (Dark) */
+  --surface-0: #0c0e12; /* Surface Container Lowest (Pure Deep Dark) */
+  --surface-1: #111318; /* Surface (Google Dark Canvas Background) */
+  --surface-2: #1f2329; /* Surface Container (Default Cards & Panels) */
+  --surface-3: #282a2f; /* Surface Container High (Elevated & Active States) */
+  --surface-4: #33353a; /* Surface Container Highest (Modals & Banners) */
+
+  /* M3 Ink & Typography (Dark) */
+  --ink: #e2e2e6;                 /* On-Surface (High emphasis text) */
+  --ink-strong: #ffffff;          /* On-Surface (Maximum emphasis headings) */
+  --ink-muted: #c4c7c5;           /* On-Surface Variant (Secondary / Helper text) */
+  --ink-on-channel: 226, 226, 230;/* Keystone RGB triplet for state overlays */
+
+  /* M3 Separators, Scrim & Overlays (Dark) */
+  --separator: #2d3137;                       /* Soft row divider */
+  --divider: #444746;                         /* Outline-Variant */
+  --scrim: rgba(0, 0, 0, 0.65);               /* Dialog modal backdrop */
+  --bg-overlay: rgba(17, 19, 24, 0.88);       /* Frosted overlay */
+
+  /* M3 Brand & Accent Colors (Dark - Google Baseline Blue) */
+  --brand: #a8c7fa;                           /* Google Primary Blue (80 tone) */
+  --focus-ring: #a8c7fa;                      /* Focused outline */
+  --system-surface: #111318;                  /* Android / System bar background */
+
+  --c-primary: #a8c7fa;
+  --c-accent: #7fcfff;
+  --c-warn: #ffb4ab;
+
+  /* Material 3 Semantic Color Roles (Dark) */
+  --md-sys-color-primary: #a8c7fa;
+  --md-sys-color-on-primary: #062e6f;
+  --md-sys-color-primary-container: #0842a0;
+  --md-sys-color-on-primary-container: #d3e3fd;
+  --md-sys-color-secondary: #bcc7db;
+  --md-sys-color-secondary-container: #004a77;
+  --md-sys-color-on-secondary-container: #c2e7ff;
+  --md-sys-color-tertiary: #d7bee4;
+  --md-sys-color-tertiary-container: #523f5f;
+  --md-sys-color-on-tertiary-container: #f3daff;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-outline: #8e9099;
+  --md-sys-color-outline-variant: #444746;
+
+  /* ===============================
+   * 2. MATERIAL PALETTE LADDERS
+   * =============================== */
+  --palette-primary-50: #021535;
+  --palette-primary-100: #042457;
+  --palette-primary-200: #06327a;
+  --palette-primary-300: #0842a0;
+  --palette-primary-400: #4c8df6;
+  --palette-primary-500: #a8c7fa;
+  --palette-primary-600: #0842a0;
+  --palette-primary-700: #a8c7fa;
+  --palette-primary-800: #d3e3fd;
+  --palette-primary-900: #ffffff;
+  --palette-primary-contrast-500: #041e49;
+
+  --palette-accent-100: #003859;
+  --palette-accent-200: #004d7a;
+  --palette-accent-300: #00639b;
+  --palette-accent-400: #4facfd;
+  --palette-accent-500: #7fcfff;
+  --palette-accent-600: #004a77;
+  --palette-accent-contrast-500: #001d35;
+
+  /* ===============================
+   * 3. M3 INTERACTION STATE TOKENS
+   * =============================== */
+  --state-hover-alpha: 0.08;
+  --state-focus-alpha: 0.12;
+  --state-pressed-alpha: 0.12;
+  --state-selected-alpha: 0.12;
+  --state-disabled-alpha: 0.38;
+
+  /* Legacy Opacity Fallbacks */
+  --hover-bg-opacity: 0.08;
+  --focus-bg-opacity: 0.12;
+  --pressed-bg-opacity: 0.12;
+  --disabled-opacity: 0.38;
+
+  /* ===============================
+   * 4. APP & COMPONENT BACKGROUNDS
+   * =============================== */
+  --bg: var(--surface-1);
+  --bg-darker: var(--surface-0);
+  --bg-slightly-lighter: var(--surface-2);
+  --bg-lighter: var(--surface-2);
+  --bg-lightest: var(--surface-3);
+  --bg-super-light: var(--surface-4);
+  --card-bg: var(--surface-2);
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+
+  /* Navigation Drawer (Sidenav) */
+  --sidenav-bg: var(--surface-1);
+  --sidenav-bg-mobile: var(--surface-1);
+  --sidenav-text: var(--ink-muted);
+  --sidenav-text-hover: var(--ink-strong);
+  --sidenav-text-secondary: var(--ink-muted);
+  --sidenav-active-text: #c2e7ff;
+  --sidenav-item-active-bg: #004a77;
+  --sidenav-hover-bg: rgba(var(--ink-on-channel), 0.06);
+
+  /* Task Container Cards */
+  --task-c-bg: var(--surface-2);
+  --task-c-current-bg: #0842a0;
+  --task-c-selected-bg: #1e3250;
+  --task-c-multi-selected-bg: #1d3d6e;
+  --task-c-drag-drop-bg: var(--surface-3);
+  --task-c-bg-done: #17191e;
+  --task-is-done-dim-opacity: 0.45;
+  --task-border: 1px solid var(--md-sys-color-outline-variant);
+  --task-separator: none;
+  --task-list-row-gap: 8px;
+  --task-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+  --task-current-shadow: 0 2px 8px 1px rgba(8, 66, 160, 0.45);
+  --task-selected-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+  --task-shadow-sub-task: none;
+
+  /* Subtask Containers */
+  --sub-task-c-bg: var(--surface-0);
+  --sub-task-c-bg-done: #14161a;
+  --sub-task-c-bg-in-selected: #1d2c42;
+  --sub-task-border-color: var(--md-sys-color-outline-variant);
+
+  /* Action Buttons */
+  --button-primary-label: #a8c7fa;
+  --button-accent-label: #7fcfff;
+  --button-warn-label: #ffb4ab;
+
+  /* Notes & Details */
+  --standard-note-bg: var(--surface-2);
+  --standard-note-fg: var(--ink);
+  --standard-note-bg-hovered: var(--surface-3);
+  --task-detail-bg: var(--surface-2);
+  --task-detail-bg-hover: var(--surface-3);
+  --task-detail-value-color: var(--ink-muted);
+
+  /* Chips, Badges & Inputs */
+  --chip-outline-color: var(--md-sys-color-outline-variant);
+  --progress-bg: rgba(var(--ink-on-channel), 0.15);
+  --input-bg: rgba(var(--ink-on-channel), 0.06);
+  --input-bg-hover: rgba(var(--ink-on-channel), 0.10);
+  --input-border-color: var(--md-sys-color-outline-variant);
+
+  /* Banners, Toolbars & Panels */
+  --banner-bg: var(--surface-3);
+  --banner-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+  --improvement-text: var(--ink-strong);
+  --improvement-border: rgba(168, 199, 250, 0.3);
+  --improvement-button-text: #d3e3fd;
+  --close-btn-bg: var(--surface-3);
+  --close-btn-border: transparent;
+  --link-color: #a8c7fa;
+
+  /* Scrollbars */
+  --scrollbar-thumb: #45474c;
+  --scrollbar-thumb-hover: #8e9099;
+  --scrollbar-track: transparent;
+}
+
+/* ==========================================================================
+   GLOBAL M3 COMPONENT STYLES & OVERRIDES
+   ========================================================================== */
+
+/* 1. Body & Canvas Background */
+body,
+body.isDarkTheme {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-primary-stack);
+  letter-spacing: 0.01em;
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+/* Clean up legacy harsh gradient pseudo-elements */
+body::before,
+body.isLightTheme::before,
+body.isDarkTheme::before {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* 2. Tasks: Material 3 Container Card Architecture */
+task {
+  border: none !important;
+  margin-bottom: var(--task-list-row-gap) !important;
+}
+
+task .box {
+  background: var(--task-c-bg);
+  border: var(--task-border);
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-shadow);
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* Task Hover Elevation */
+@media (hover: hover) {
+  task:not(.isSelected):not(.isCurrent):not(.isMultiSelected):hover:not(:has(task:hover))
+    > swipe-block
+    > .inner-wrapper
+    > .inner-wrapper
+    > .box {
+    background-color: var(--surface-3) !important;
+    box-shadow: var(--m3-shadow-2) !important;
+  }
+}
+
+/* Currently Active Task (Focus / Pomodoro Active) */
+task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background: var(--task-c-current-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-current-shadow) !important;
+  outline: 2px solid var(--brand) !important;
+  outline-offset: -2px;
+}
+
+/* Selected Task (Inspector Panel Active) */
+task.isSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background: var(--task-c-selected-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-selected-shadow) !important;
+}
+
+/* Multi-Selected Tasks */
+task.isMultiSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background: var(--task-c-multi-selected-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  outline: 2px solid var(--brand) !important;
+}
+
+/* Subtasks: Clean Inset Nesting */
+task .sub-tasks {
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+task .sub-tasks task .box {
+  background: var(--sub-task-c-bg) !important;
+  border: 1px solid var(--sub-task-border-color) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+/* Done Checkbox Toggle Glyph */
+.select-ring::before {
+  border-radius: 50% !important;
+  border-width: 2px !important;
+}
+
+/* 3. Navigation Drawer (Sidenav): Material 3 Pill Selection */
+.side-nav nav-item a,
+.side-nav .nav-link,
+.side-nav .mat-mdc-list-item {
+  border-radius: 28px !important;
+  margin: 2px 8px !important;
+  padding: 0 16px !important;
+  min-height: 44px !important;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast) !important;
+}
+
+.side-nav nav-item.isActive a,
+.side-nav .nav-link.active,
+.side-nav .mat-mdc-list-item.active {
+  background-color: var(--sidenav-item-active-bg) !important;
+  color: var(--sidenav-active-text) !important;
+  font-weight: 500 !important;
+}
+
+/* 4. Floating Action Button (FAB): Material 3 Squircle */
+.mat-mdc-fab,
+.mat-mdc-mini-fab,
+button[mat-fab],
+button[mat-mini-fab] {
+  border-radius: 16px !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  background-color: var(--brand) !important;
+  color: var(--palette-primary-contrast-500) !important;
+  transition:
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast),
+    background-color var(--transition-fast) !important;
+}
+
+.mat-mdc-fab:hover,
+.mat-mdc-mini-fab:hover,
+button[mat-fab]:hover,
+button[mat-mini-fab]:hover {
+  box-shadow: var(--m3-shadow-3) !important;
+}
+
+/* 5. Buttons: Material 3 Rounded Pills */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  border-radius: 20px !important;
+  font-family: var(--font-primary-stack) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0 20px !important;
+  min-height: 40px !important;
+}
+
+/* 6. Chips & Tags: Full Pill Shapes */
+.mat-mdc-chip,
+.mat-mdc-basic-chip,
+.tag,
+tag {
+  border-radius: var(--radius-pill) !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+/* 7. Dialogs & Modals: Material 3 Large Curved Corners */
+.mat-mdc-dialog-surface,
+.mat-mdc-dialog-container .mat-mdc-dialog-surface {
+  border-radius: 28px !important;
+  background-color: var(--surface-3) !important;
+  color: var(--ink) !important;
+  box-shadow: var(--m3-shadow-3) !important;
+  padding: 8px 12px !important;
+}
+
+/* 8. Menus & Popovers */
+.mat-mdc-menu-panel {
+  border-radius: 16px !important;
+  background-color: var(--surface-2) !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  padding: 8px !important;
+}
+
+.mat-mdc-menu-item {
+  border-radius: 12px !important;
+  min-height: 44px !important;
+}
+
+/* 9. Floating Search Bar & Add-Task Bar */
+add-task-bar,
+.add-task-bar,
+search-bar,
+.search-bar {
+  border-radius: 28px !important;
+}
+
+add-task-bar .box,
+search-bar .box {
+  border-radius: 28px !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--divider) !important;
+}
+
+/* 10. Form Fields & Inputs */
+.mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  border-radius: var(--input-border-radius) !important;
+  border: 1px solid var(--input-border-color) !important;
+  background: var(--input-bg) !important;
+}
+
+/* 11. Custom Slim Pill Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+/* 12. Links & Focus States */
+a,
+a[href] {
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover,
+a[href]:hover {
+  text-decoration: underline;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
