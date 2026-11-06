@@ -387,6 +387,33 @@ button[mat-mini-fab] {
     background-color var(--transition-fast) !important;
 }
 
+.mobile-bottom-nav .nav-button {
+  padding: 0 !important; /* equal flex widths; the 20px button padding skews them */
+}
+
+/* Mobile bottom nav: keep the FAB centered when the buttons around it are uneven
+   (e.g. Planner disabled leaves 1 button left of it and 2 right). */
+.mobile-bottom-nav .nav-button:first-child:has(+ .add-task-button),
+.mobile-bottom-nav .add-task-button + .nav-button:last-child {
+  flex-grow: 2 !important;
+}
+
+/* Subtask collapse/expand toggle: the app's own rule (two-class specificity, !important)
+   beats the FAB styling above and leaves a dim bg-lighter circle that vanishes on
+   dark surfaces. Out-specify it with a visible tonal chip. */
+task .toggle-sub-tasks-btn.toggle-sub-tasks-btn {
+  background: var(--surface-4) !important;
+  color: var(--ink-strong) !important;
+  border: 1px solid var(--separator) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--m3-shadow-1) !important;
+  opacity: 1 !important;
+}
+
+task .toggle-sub-tasks-btn.toggle-sub-tasks-btn mat-icon {
+  color: inherit !important;
+}
+
 .mat-mdc-button,
 .mat-mdc-raised-button,
 .mat-mdc-flat-button,
