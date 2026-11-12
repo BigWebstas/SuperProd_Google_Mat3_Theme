@@ -438,9 +438,15 @@ task .box {
   }
 }
 
+/* Completed Tasks: muted surface, flat (no elevation) */
+task.isDone > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background-color: var(--task-c-bg-done);
+  box-shadow: none;
+}
+
 /* Currently Active Task (Focus / Pomodoro Active) */
 task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
-  background: var(--task-c-current-bg) !important;
+  background-color: var(--task-c-current-bg) !important;
   border-radius: var(--task-border-radius) !important;
   box-shadow: var(--task-current-shadow) !important;
   outline: 2px solid var(--brand) !important;
@@ -449,14 +455,14 @@ task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
 
 /* Selected Task (Inspector Panel Active) */
 task.isSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
-  background: var(--task-c-selected-bg) !important;
+  background-color: var(--task-c-selected-bg) !important;
   border-radius: var(--task-border-radius) !important;
   box-shadow: var(--task-selected-shadow) !important;
 }
 
 /* Multi-Selected Tasks */
 task.isMultiSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
-  background: var(--task-c-multi-selected-bg) !important;
+  background-color: var(--task-c-multi-selected-bg) !important;
   border-radius: var(--task-border-radius) !important;
   outline: 2px solid var(--brand) !important;
 }
@@ -468,10 +474,124 @@ task .sub-tasks {
 }
 
 task .sub-tasks task .box {
-  background: var(--sub-task-c-bg) !important;
+  background-color: var(--sub-task-c-bg) !important;
   border: 1px solid var(--sub-task-border-color) !important;
   border-radius: 10px !important;
   box-shadow: none !important;
+}
+
+/* Subtasks: thin rounded connector rail in the left gutter */
+task .sub-tasks::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--sub-task-border-color);
+  opacity: 0.7;
+}
+
+/* Planner Cards: same priority stripe + tint on planner-task */
+planner-task:not(.x):not(.y) {
+  --priority-color: transparent;
+  background-image:
+    linear-gradient(to right, var(--priority-color) 0 4px, transparent 4px),
+    linear-gradient(color-mix(in srgb, var(--priority-color) 8%, transparent), color-mix(in srgb, var(--priority-color) 8%, transparent));
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='high'], [data-priority='3'])):not(.x):not(.y) {
+  --priority-color: var(--priority-high);
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='medium'], [data-priority='2'])):not(.x):not(.y) {
+  --priority-color: var(--priority-medium);
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='low'], [data-priority='1'])):not(.x):not(.y) {
+  --priority-color: var(--priority-low);
+}
+
+/* Overdue Tasks: error-toned schedule icon and date badge */
+body {
+  --overdue-fg: #b3261e;
+}
+
+body.isDarkTheme {
+  --overdue-fg: #f2b8b5;
+}
+
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn,
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn .time-badge {
+  color: var(--overdue-fg) !important;
+}
+
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn .time-badge {
+  font-weight: 600;
+}
+
+/* M3 State Layers: hover 8%, focus 10%, pressed 12% tonal overlays */
+.side-nav nav-item:not(.isActive) a:hover,
+.mat-mdc-menu-item:not([disabled]):hover {
+  background-color: rgba(var(--ink-on-channel), 0.08) !important;
+}
+
+.side-nav nav-item:not(.isActive) a:focus-visible,
+.mat-mdc-menu-item:not([disabled]):focus-visible {
+  background-color: rgba(var(--ink-on-channel), 0.1) !important;
+}
+
+.side-nav nav-item:not(.isActive) a:active,
+.mat-mdc-menu-item:not([disabled]):active {
+  background-color: rgba(var(--ink-on-channel), 0.12) !important;
+}
+
+/* Task Priority Colors: accent stripe + soft tint (high / medium / low) */
+body {
+  --priority-high: #b3261e;
+  --priority-medium: #b26a00;
+  --priority-low: #0b57d0;
+}
+
+body.isDarkTheme {
+  --priority-high: #f2b8b5;
+  --priority-medium: #ffb957;
+  --priority-low: #a8c7fa;
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='high'], [data-priority='3'])) > .box {
+  --priority-color: var(--priority-high);
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='medium'], [data-priority='2'])) > .box {
+  --priority-color: var(--priority-medium);
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='low'], [data-priority='1'])) > .box {
+  --priority-color: var(--priority-low);
+}
+
+task .inner-wrapper > .box {
+  --priority-color: transparent;
+  background-image:
+    linear-gradient(to right, var(--priority-color) 0 4px, transparent 4px),
+    linear-gradient(color-mix(in srgb, var(--priority-color) 8%, transparent), color-mix(in srgb, var(--priority-color) 8%, transparent));
+}
+
+task task-priority-indicator[data-priority='high'],
+task task-priority-indicator[data-priority='3'] {
+  color: var(--priority-high);
+}
+
+task task-priority-indicator[data-priority='medium'],
+task task-priority-indicator[data-priority='2'] {
+  color: var(--priority-medium);
+}
+
+task task-priority-indicator[data-priority='low'],
+task task-priority-indicator[data-priority='1'] {
+  color: var(--priority-low);
 }
 
 /* Done Checkbox Toggle Glyph */
@@ -658,4 +778,78 @@ a[href]:hover {
 *:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+}
+
+/* ==========================================================================
+   NATIVE COLOR SCHEME: scrollbars, date pickers & form controls follow the mode
+   ========================================================================== */
+body {
+  color-scheme: light;
+}
+
+body.isDarkTheme {
+  color-scheme: dark;
+}
+
+/* Embedded pages (plugins) declare no color scheme. If they differed from the app's, the
+   browser would paint them on an opaque white canvas, so keep iframes on the default. */
+iframe {
+  color-scheme: normal;
+}
+
+/* ==========================================================================
+   TRACKED TASK: a soft light travels around the card edge
+   ========================================================================== */
+@property --m3-ring-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes m3-ring-spin {
+  to {
+    --m3-ring-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (mask-composite: exclude) {
+    task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+      outline-color: color-mix(in srgb, var(--brand) 30%, transparent) !important;
+    }
+
+    task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: inherit;
+      pointer-events: none;
+      background: conic-gradient(
+        from var(--m3-ring-angle),
+        transparent 0%,
+        transparent 62%,
+        color-mix(in srgb, var(--brand) 40%, transparent) 82%,
+        var(--brand) 100%
+      );
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+      animation: m3-ring-spin 4s linear infinite;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION: collapse every theme transition to an instant change
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms linear;
+    --transition-normal: 0.01ms linear;
+    --transition-standard: all 0.01ms linear;
+    --ani-standard-timing: linear;
+    --ani-enter-timing: linear;
+    --ani-leave-timing: linear;
+  }
 }

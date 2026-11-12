@@ -1,0 +1,513 @@
+/*@@HEADER@@*/
+
+/* ==========================================================================
+   ROOT: MOTION & ELEVATION TIMINGS
+   ========================================================================== */
+:root {
+  /* Google Material 3 Easing & Motion Curves */
+  --ani-standard-timing: cubic-bezier(0.2, 0.0, 0, 1.0);
+  --ani-enter-timing: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+  --ani-leave-timing: cubic-bezier(0.3, 0.0, 0.8, 0.15);
+  --transition-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-normal: 250ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-standard: all 225ms cubic-bezier(0.2, 0, 0, 1);
+
+  /* Google Font Stack with modern system fallbacks */
+  --font-primary-stack: 'Google Sans', 'Google Sans Text', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* Material 3 Radius Scale */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-xxl: 28px;
+  --radius-pill: 9999px;
+  --card-border-radius: 16px;
+  --input-border-radius: 12px;
+  --task-border-radius: 14px;
+
+  /* Material 3 Elevation Shadows */
+  --m3-shadow-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.18);
+  --m3-shadow-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.12), 0px 1px 2px 0px rgba(0, 0, 0, 0.18);
+  --m3-shadow-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.12), 0px 1px 3px 0px rgba(0, 0, 0, 0.20);
+}
+
+/* ==========================================================================
+   LIGHT MODE: GOOGLE MATERIAL 3 SPECIFICATION
+   ========================================================================== */
+/*@@LIGHT@@*/
+
+/* ==========================================================================
+   DARK MODE: GOOGLE MATERIAL 3 SPECIFICATION
+   ========================================================================== */
+/*@@DARK@@*/
+
+/* ==========================================================================
+   GLOBAL M3 COMPONENT STYLES & OVERRIDES
+   ========================================================================== */
+
+/* 1. Body & Canvas Background */
+body,
+body.isDarkTheme {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-primary-stack);
+  letter-spacing: 0.01em;
+  transition:
+    background-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+/* Clean up legacy harsh gradient pseudo-elements */
+body::before,
+body.isLightTheme::before,
+body.isDarkTheme::before {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* 2. Tasks: Material 3 Container Card Architecture */
+task {
+  border: none !important;
+  margin-bottom: var(--task-list-row-gap) !important;
+}
+
+task .box {
+  background: var(--task-c-bg);
+  border: var(--task-border);
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-shadow);
+  transition:
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+/* Task Hover Elevation */
+@media (hover: hover) {
+  task:not(.isSelected):not(.isCurrent):not(.isMultiSelected):hover:not(:has(task:hover))
+    > swipe-block
+    > .inner-wrapper
+    > .inner-wrapper
+    > .box {
+    background-color: var(--surface-3) !important;
+    box-shadow: var(--m3-shadow-2) !important;
+  }
+}
+
+/* Completed Tasks: muted surface, flat (no elevation) */
+task.isDone > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background-color: var(--task-c-bg-done);
+  box-shadow: none;
+}
+
+/* Currently Active Task (Focus / Pomodoro Active) */
+task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background-color: var(--task-c-current-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-current-shadow) !important;
+  outline: 2px solid var(--brand) !important;
+  outline-offset: -2px;
+}
+
+/* Selected Task (Inspector Panel Active) */
+task.isSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background-color: var(--task-c-selected-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  box-shadow: var(--task-selected-shadow) !important;
+}
+
+/* Multi-Selected Tasks */
+task.isMultiSelected > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+  background-color: var(--task-c-multi-selected-bg) !important;
+  border-radius: var(--task-border-radius) !important;
+  outline: 2px solid var(--brand) !important;
+}
+
+/* Subtasks: Clean Inset Nesting */
+task .sub-tasks {
+  margin-top: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+task .sub-tasks task .box {
+  background-color: var(--sub-task-c-bg) !important;
+  border: 1px solid var(--sub-task-border-color) !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+/* Subtasks: thin rounded connector rail in the left gutter */
+task .sub-tasks::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  bottom: 12px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--sub-task-border-color);
+  opacity: 0.7;
+}
+
+/* Planner Cards: same priority stripe + tint on planner-task */
+planner-task:not(.x):not(.y) {
+  --priority-color: transparent;
+  background-image:
+    linear-gradient(to right, var(--priority-color) 0 4px, transparent 4px),
+    linear-gradient(color-mix(in srgb, var(--priority-color) 8%, transparent), color-mix(in srgb, var(--priority-color) 8%, transparent));
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='high'], [data-priority='3'])):not(.x):not(.y) {
+  --priority-color: var(--priority-high);
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='medium'], [data-priority='2'])):not(.x):not(.y) {
+  --priority-color: var(--priority-medium);
+}
+
+planner-task:has(> swipe-block task-priority-indicator:is([data-priority='low'], [data-priority='1'])):not(.x):not(.y) {
+  --priority-color: var(--priority-low);
+}
+
+/* Overdue Tasks: error-toned schedule icon and date badge */
+body {
+  --overdue-fg: #b3261e;
+}
+
+body.isDarkTheme {
+  --overdue-fg: #f2b8b5;
+}
+
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn,
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn .time-badge {
+  color: var(--overdue-fg) !important;
+}
+
+task.isOverdue:not(.isDone) > swipe-block > .inner-wrapper > .inner-wrapper > .first-line .schedule-btn .time-badge {
+  font-weight: 600;
+}
+
+/* M3 State Layers: hover 8%, focus 10%, pressed 12% tonal overlays */
+.side-nav nav-item:not(.isActive) a:hover,
+.mat-mdc-menu-item:not([disabled]):hover {
+  background-color: rgba(var(--ink-on-channel), 0.08) !important;
+}
+
+.side-nav nav-item:not(.isActive) a:focus-visible,
+.mat-mdc-menu-item:not([disabled]):focus-visible {
+  background-color: rgba(var(--ink-on-channel), 0.1) !important;
+}
+
+.side-nav nav-item:not(.isActive) a:active,
+.mat-mdc-menu-item:not([disabled]):active {
+  background-color: rgba(var(--ink-on-channel), 0.12) !important;
+}
+
+/* Task Priority Colors: accent stripe + soft tint (high / medium / low) */
+body {
+  --priority-high: #b3261e;
+  --priority-medium: #b26a00;
+  --priority-low: #0b57d0;
+}
+
+body.isDarkTheme {
+  --priority-high: #f2b8b5;
+  --priority-medium: #ffb957;
+  --priority-low: #a8c7fa;
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='high'], [data-priority='3'])) > .box {
+  --priority-color: var(--priority-high);
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='medium'], [data-priority='2'])) > .box {
+  --priority-color: var(--priority-medium);
+}
+
+task .inner-wrapper:has(> .first-line task-priority-indicator:is([data-priority='low'], [data-priority='1'])) > .box {
+  --priority-color: var(--priority-low);
+}
+
+task .inner-wrapper > .box {
+  --priority-color: transparent;
+  background-image:
+    linear-gradient(to right, var(--priority-color) 0 4px, transparent 4px),
+    linear-gradient(color-mix(in srgb, var(--priority-color) 8%, transparent), color-mix(in srgb, var(--priority-color) 8%, transparent));
+}
+
+task task-priority-indicator[data-priority='high'],
+task task-priority-indicator[data-priority='3'] {
+  color: var(--priority-high);
+}
+
+task task-priority-indicator[data-priority='medium'],
+task task-priority-indicator[data-priority='2'] {
+  color: var(--priority-medium);
+}
+
+task task-priority-indicator[data-priority='low'],
+task task-priority-indicator[data-priority='1'] {
+  color: var(--priority-low);
+}
+
+/* Done Checkbox Toggle Glyph */
+.select-ring::before {
+  border-radius: 50% !important;
+  border-width: 2px !important;
+}
+
+/* 3. Navigation Drawer (Sidenav): Material 3 Pill Selection */
+.side-nav nav-item a,
+.side-nav .nav-link,
+.side-nav .mat-mdc-list-item {
+  border-radius: 28px !important;
+  margin: 2px 8px !important;
+  padding: 0 16px !important;
+  min-height: 44px !important;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast) !important;
+}
+
+.side-nav nav-item.isActive a,
+.side-nav .nav-link.active,
+.side-nav .mat-mdc-list-item.active {
+  background-color: var(--sidenav-item-active-bg) !important;
+  color: var(--sidenav-active-text) !important;
+  font-weight: 500 !important;
+}
+
+/* 4. Floating Action Button (FAB): Material 3 Squircle */
+.mat-mdc-fab,
+.mat-mdc-mini-fab,
+button[mat-fab],
+button[mat-mini-fab] {
+  border-radius: 16px !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  background-color: var(--brand) !important;
+  color: var(--palette-primary-contrast-500) !important;
+  transition:
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast),
+    background-color var(--transition-fast) !important;
+}
+
+.mat-mdc-fab:hover,
+.mat-mdc-mini-fab:hover,
+button[mat-fab]:hover,
+button[mat-mini-fab]:hover {
+  box-shadow: var(--m3-shadow-3) !important;
+}
+
+.mobile-bottom-nav .nav-button {
+  padding: 0 !important; /* equal flex widths; the 20px button padding skews them */
+}
+
+/* Mobile bottom nav: keep the FAB centered when the buttons around it are uneven
+   (e.g. Planner disabled leaves 1 button left of it and 2 right). */
+.mobile-bottom-nav .nav-button:first-child:has(+ .add-task-button),
+.mobile-bottom-nav .add-task-button + .nav-button:last-child {
+  flex-grow: 2 !important;
+}
+
+/* Subtask collapse/expand toggle: the app's own rule (two-class specificity, !important)
+   beats the FAB styling above and leaves a dim bg-lighter circle that vanishes on
+   dark surfaces. Out-specify it with a visible tonal chip. */
+task .toggle-sub-tasks-btn.toggle-sub-tasks-btn {
+  background: var(--surface-4) !important;
+  color: var(--ink-strong) !important;
+  border: 1px solid var(--separator) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--m3-shadow-1) !important;
+  opacity: 1 !important;
+}
+
+task .toggle-sub-tasks-btn.toggle-sub-tasks-btn mat-icon {
+  color: inherit !important;
+}
+
+/* 5. Buttons: Material 3 Rounded Pills */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button {
+  border-radius: 20px !important;
+  font-family: var(--font-primary-stack) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0 20px !important;
+  min-height: 40px !important;
+}
+
+/* 6. Chips & Tags: Full Pill Shapes */
+.mat-mdc-chip,
+.mat-mdc-basic-chip,
+.tag,
+tag {
+  border-radius: var(--radius-pill) !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+/* 7. Dialogs & Modals: Material 3 Large Curved Corners */
+.mat-mdc-dialog-surface,
+.mat-mdc-dialog-container .mat-mdc-dialog-surface {
+  border-radius: 28px !important;
+  background-color: var(--surface-3) !important;
+  color: var(--ink) !important;
+  box-shadow: var(--m3-shadow-3) !important;
+  padding: 8px 12px !important;
+}
+
+/* 8. Menus & Popovers */
+.mat-mdc-menu-panel {
+  border-radius: 16px !important;
+  background-color: var(--surface-2) !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  padding: 8px !important;
+}
+
+.mat-mdc-menu-item {
+  border-radius: 12px !important;
+  min-height: 44px !important;
+}
+
+/* 9. Floating Search Bar & Add-Task Bar */
+add-task-bar,
+.add-task-bar,
+search-bar,
+.search-bar {
+  border-radius: 28px !important;
+}
+
+add-task-bar .box,
+search-bar .box {
+  border-radius: 28px !important;
+  box-shadow: var(--m3-shadow-2) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--divider) !important;
+}
+
+/* 10. Form Fields & Inputs */
+.mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  border-radius: var(--input-border-radius) !important;
+  border: 1px solid var(--input-border-color) !important;
+  background: var(--input-bg) !important;
+}
+
+/* 11. Custom Slim Pill Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+/* 12. Links & Focus States */
+a,
+a[href] {
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover,
+a[href]:hover {
+  text-decoration: underline;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   NATIVE COLOR SCHEME: scrollbars, date pickers & form controls follow the mode
+   ========================================================================== */
+body {
+  color-scheme: light;
+}
+
+body.isDarkTheme {
+  color-scheme: dark;
+}
+
+/* Embedded pages (plugins) declare no color scheme. If they differed from the app's, the
+   browser would paint them on an opaque white canvas, so keep iframes on the default. */
+iframe {
+  color-scheme: normal;
+}
+
+/* ==========================================================================
+   TRACKED TASK: a soft light travels around the card edge
+   ========================================================================== */
+@property --m3-ring-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes m3-ring-spin {
+  to {
+    --m3-ring-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (mask-composite: exclude) {
+    task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box {
+      outline-color: color-mix(in srgb, var(--brand) 30%, transparent) !important;
+    }
+
+    task.isCurrent > swipe-block > .inner-wrapper > .inner-wrapper > .box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      border-radius: inherit;
+      pointer-events: none;
+      background: conic-gradient(
+        from var(--m3-ring-angle),
+        transparent 0%,
+        transparent 62%,
+        color-mix(in srgb, var(--brand) 40%, transparent) 82%,
+        var(--brand) 100%
+      );
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+      animation: m3-ring-spin 4s linear infinite;
+    }
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION: collapse every theme transition to an instant change
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms linear;
+    --transition-normal: 0.01ms linear;
+    --transition-standard: all 0.01ms linear;
+    --ani-standard-timing: linear;
+    --ani-enter-timing: linear;
+    --ani-leave-timing: linear;
+  }
+}

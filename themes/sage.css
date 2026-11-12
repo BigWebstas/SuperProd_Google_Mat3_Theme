@@ -1,0 +1,250 @@
+/**
+ * Google Material 3 - Sage Theme for Super Productivity
+ *
+ * Nature-inspired, calming green tonal palette based on Google Material 3 specs.
+ * Ideal for mindful focus, stress reduction, and sustained deep work.
+ *
+ * Full Light & Dark mode support.
+ */
+
+/*@@LIGHT@@*/
+body {
+  /* Softer elevation shadows (this theme) */
+  --m3-shadow-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+  --m3-shadow-2: 0px 2px 6px 2px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.15);
+  --m3-shadow-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.10), 0px 1px 3px 0px rgba(0, 0, 0, 0.18);
+
+  /* Contract Primitives */
+  --surface-0: #ffffff;
+  --surface-1: #f7fbf2;
+  --surface-2: #ecf2e7;
+  --surface-3: #e1e7dc;
+  --surface-4: #dbe2d6;
+
+  --ink: #191d19;
+  --ink-strong: #0c100d;
+  --ink-muted: #424941;
+  --ink-on-channel: 25, 29, 25;
+
+  --separator: #d9e0d5;
+  --divider: #c2c8bf;
+  --scrim: rgba(0, 0, 0, 0.45);
+  --bg-overlay: rgba(247, 251, 242, 0.88);
+
+  --brand: #2e6a38;
+  --focus-ring: #2e6a38;
+  --system-surface: #f7fbf2;
+
+  --c-primary: #2e6a38;
+  --c-accent: #4f6352;
+  --c-warn: #ba1a1a;
+
+  /* Material Palette */
+  --palette-primary-50: #eaf8ec;
+  --palette-primary-100: #c9f0ce;
+  --palette-primary-200: #9cdfa4;
+  --palette-primary-300: #6ecc7a;
+  --palette-primary-400: #46b453;
+  --palette-primary-500: #2e6a38;
+  --palette-primary-600: #22532b;
+  --palette-primary-700: #173d1f;
+  --palette-primary-contrast-500: #ffffff;
+
+  --palette-accent-500: #4f6352;
+  --palette-accent-contrast-500: #ffffff;
+
+  /* State Tokens */
+  --state-hover-alpha: 0.08;
+  --state-focus-alpha: 0.12;
+  --state-pressed-alpha: 0.12;
+  --state-selected-alpha: 0.12;
+  --state-disabled-alpha: 0.38;
+
+  --hover-bg-opacity: 0.08;
+  --focus-bg-opacity: 0.12;
+  --pressed-bg-opacity: 0.12;
+  --disabled-opacity: 0.38;
+
+  /* Backgrounds & Components */
+  --bg: var(--surface-1);
+  --bg-darker: var(--surface-0);
+  --bg-slightly-lighter: #ffffff;
+  --bg-lighter: var(--surface-2);
+  --bg-lightest: var(--surface-3);
+  --bg-super-light: var(--surface-0);
+  --card-bg: var(--surface-2);
+  --card-shadow: var(--m3-shadow-1);
+
+  --sidenav-bg: var(--surface-1);
+  --sidenav-bg-mobile: var(--surface-1);
+  --sidenav-text: var(--ink-muted);
+  --sidenav-text-hover: var(--ink-strong);
+  --sidenav-text-secondary: var(--ink-muted);
+  --sidenav-active-text: #052109;
+  --sidenav-item-active-bg: #b9f3be;
+  --sidenav-hover-bg: rgba(var(--ink-on-channel), 0.06);
+
+  --task-c-bg: var(--surface-2);
+  --task-c-current-bg: #c5f2ca;
+  --task-c-selected-bg: #dce7dc;
+  --task-c-multi-selected-bg: #c5f2ca;
+  --task-c-drag-drop-bg: var(--surface-3);
+  --task-c-bg-done: #eef2eb;
+  --task-is-done-dim-opacity: 0.45;
+  --task-border: 1px solid var(--divider);
+  --task-separator: none;
+  --task-list-row-gap: 8px;
+  --task-shadow: var(--m3-shadow-1);
+  --task-current-shadow: var(--m3-shadow-2);
+  --task-selected-shadow: var(--m3-shadow-1);
+  --task-shadow-sub-task: none;
+
+  --sub-task-c-bg: var(--surface-0);
+  --sub-task-c-bg-done: #eef2eb;
+  --sub-task-c-bg-in-selected: #e2ece1;
+  --sub-task-border-color: var(--divider);
+
+  --button-primary-label: #2e6a38;
+  --button-accent-label: #4f6352;
+  --button-warn-label: #ba1a1a;
+
+  --standard-note-bg: var(--surface-0);
+  --standard-note-fg: var(--ink);
+  --standard-note-bg-hovered: var(--surface-2);
+  --task-detail-bg: var(--surface-0);
+  --task-detail-bg-hover: var(--surface-2);
+  --task-detail-value-color: var(--ink-muted);
+
+  --chip-outline-color: var(--divider);
+  --progress-bg: rgba(var(--ink-on-channel), 0.12);
+  --input-bg: rgba(var(--ink-on-channel), 0.04);
+  --input-bg-hover: rgba(var(--ink-on-channel), 0.08);
+  --input-border-color: var(--divider);
+
+  --banner-bg: var(--surface-3);
+  --banner-shadow: var(--m3-shadow-2);
+  --improvement-text: var(--ink-strong);
+  --improvement-border: #b9f3be;
+  --improvement-button-text: #052109;
+  --close-btn-bg: var(--surface-3);
+  --close-btn-border: transparent;
+  --link-color: #2e6a38;
+
+  --scrollbar-thumb: #b4bcb1;
+  --scrollbar-thumb-hover: #71796f;
+  --scrollbar-track: transparent;
+}
+
+/*@@DARK@@*/
+body.isDarkTheme {
+  --surface-0: #0c100c;
+  --surface-1: #111411;
+  --surface-2: #1a201b;
+  --surface-3: #242b25;
+  --surface-4: #2d352e;
+
+  --ink: #e1e5df;
+  --ink-strong: #ffffff;
+  --ink-muted: #c2c8c0;
+  --ink-on-channel: 225, 229, 223;
+
+  --separator: #29312a;
+  --divider: #404841;
+  --scrim: rgba(0, 0, 0, 0.65);
+  --bg-overlay: rgba(17, 20, 17, 0.88);
+
+  --brand: #96d698;
+  --focus-ring: #96d698;
+  --system-surface: #111411;
+
+  --c-primary: #96d698;
+  --c-accent: #b6ccb8;
+  --c-warn: #ffb4ab;
+
+  --palette-primary-500: #96d698;
+  --palette-primary-400: #6ecc7a;
+  --palette-primary-600: #1a4f24;
+  --palette-primary-contrast-500: #003912;
+
+  --palette-accent-500: #b6ccb8;
+  --palette-accent-contrast-500: #223526;
+
+  --state-hover-alpha: 0.08;
+  --state-focus-alpha: 0.12;
+  --state-pressed-alpha: 0.12;
+  --state-selected-alpha: 0.12;
+  --state-disabled-alpha: 0.38;
+
+  --hover-bg-opacity: 0.08;
+  --focus-bg-opacity: 0.12;
+  --pressed-bg-opacity: 0.12;
+  --disabled-opacity: 0.38;
+
+  --bg: var(--surface-1);
+  --bg-darker: var(--surface-0);
+  --bg-slightly-lighter: var(--surface-2);
+  --bg-lighter: var(--surface-2);
+  --bg-lightest: var(--surface-3);
+  --bg-super-light: var(--surface-4);
+  --card-bg: var(--surface-2);
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+
+  --sidenav-bg: var(--surface-1);
+  --sidenav-bg-mobile: var(--surface-1);
+  --sidenav-text: var(--ink-muted);
+  --sidenav-text-hover: var(--ink-strong);
+  --sidenav-text-secondary: var(--ink-muted);
+  --sidenav-active-text: #b1f3b3;
+  --sidenav-item-active-bg: #14491e;
+  --sidenav-hover-bg: rgba(var(--ink-on-channel), 0.06);
+
+  --task-c-bg: var(--surface-2);
+  --task-c-current-bg: #164f21;
+  --task-c-selected-bg: #223224;
+  --task-c-multi-selected-bg: #194622;
+  --task-c-drag-drop-bg: var(--surface-3);
+  --task-c-bg-done: #151916;
+  --task-is-done-dim-opacity: 0.45;
+  --task-border: 1px solid var(--divider);
+  --task-separator: none;
+  --task-list-row-gap: 8px;
+  --task-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
+  --task-current-shadow: 0 2px 8px 1px rgba(22, 79, 33, 0.45);
+  --task-selected-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+  --task-shadow-sub-task: none;
+
+  --sub-task-c-bg: var(--surface-0);
+  --sub-task-c-bg-done: #121613;
+  --sub-task-c-bg-in-selected: #1d2b1f;
+  --sub-task-border-color: var(--divider);
+
+  --button-primary-label: #96d698;
+  --button-accent-label: #b6ccb8;
+  --button-warn-label: #ffb4ab;
+
+  --standard-note-bg: var(--surface-2);
+  --standard-note-fg: var(--ink);
+  --standard-note-bg-hovered: var(--surface-3);
+  --task-detail-bg: var(--surface-2);
+  --task-detail-bg-hover: var(--surface-3);
+  --task-detail-value-color: var(--ink-muted);
+
+  --chip-outline-color: var(--divider);
+  --progress-bg: rgba(var(--ink-on-channel), 0.15);
+  --input-bg: rgba(var(--ink-on-channel), 0.06);
+  --input-bg-hover: rgba(var(--ink-on-channel), 0.10);
+  --input-border-color: var(--divider);
+
+  --banner-bg: var(--surface-3);
+  --banner-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+  --improvement-text: var(--ink-strong);
+  --improvement-border: rgba(150, 214, 152, 0.3);
+  --improvement-button-text: #b1f3b3;
+  --close-btn-bg: var(--surface-3);
+  --close-btn-border: transparent;
+  --link-color: #96d698;
+
+  --scrollbar-thumb: #414942;
+  --scrollbar-thumb-hover: #8b938a;
+  --scrollbar-track: transparent;
+}

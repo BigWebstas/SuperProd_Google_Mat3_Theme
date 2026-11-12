@@ -11,6 +11,7 @@ This repository provides a Google Material 3 (Material You / M3) theme suite for
 - `google-material-3-monochrome.css`: Executive Monochrome (Minimalist grayscale)
 
 ## Essential Commands
+- **Build themes**: `npm run build` regenerates all five CSS files. **Edit `src/template.css` (shared rules) or `themes/<name>.css` (header + light/dark colour blocks), never the built `google-material-3*.css` files directly.** `npm test` fails if they are stale.
 - **Run validation**: `npm test` or `node scripts/validate-theme.js <file.css>`
 - **Run preview server**: `npm run preview` (opens http://localhost:3000)
 
