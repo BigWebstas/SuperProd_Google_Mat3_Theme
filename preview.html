@@ -470,6 +470,19 @@
       justify-content: flex-end;
       gap: 10px;
     }
+
+    /* Real-SP-markup demo: minimal layout only, so the theme's own selectors do the styling */
+    .sp-demo { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .sp-demo-label { font-size: 12px; font-weight: 500; opacity: 0.7; margin-bottom: -4px; }
+    .sp-demo task { display: block; position: relative; }
+    .sp-demo .inner-wrapper { position: relative; padding: 12px 0; }
+    .sp-demo .box { position: absolute; inset: 0; }
+    .sp-demo .first-line { position: relative; display: flex; align-items: center; gap: 12px; padding: 0 16px; }
+    .sp-demo .all-controls-wrapper { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .sp-demo .sub-tasks { position: relative; margin: 6px 16px 0 28px; }
+    .sp-demo .title { flex: 1; }
+    .sp-demo .schedule-btn { font: inherit; font-size: 12px; background: none; border: 0; padding: 4px 8px; color: inherit; }
+    .sp-demo task.isDone .title { text-decoration: line-through; opacity: 0.6; }
   </style>
 </head>
 <body>
@@ -653,6 +666,40 @@
 
       </div>
 
+      <!-- Real Super Productivity markup: priority (3 high / 2 medium / 1 low), overdue, done, selected, subtasks -->
+      <div class="sp-demo">
+        <div class="sp-demo-label">Real SP markup: priority stripes, overdue, done, selected, subtask rail</div>
+          <task class=""><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">High priority (3)</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="3">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+          <task class=""><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Medium priority (2)</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="2">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+          <task class=""><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Low priority (1) with a subtask</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="1">!</task-priority-indicator></div></div>
+            <div class="sub-tasks"><task><swipe-block><div class="inner-wrapper"><div class="inner-wrapper"><div class="box"></div><div class="first-line"><div class="title">Subtask with low priority</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="1">!</task-priority-indicator></div></div></div></div></swipe-block></task></div>
+          </div></div></swipe-block></task>
+          <task class="isOverdue"><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Overdue with high priority</div><div class="all-controls-wrapper"><button class="schedule-btn"><span class="time-badge">Yesterday</span></button><task-priority-indicator data-priority="3">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+          <task class="isCurrent"><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Tracked task with animated ring</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="2">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+          <task class="isSelected"><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Selected, keeps stripe</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="3">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+          <task class="isDone"><swipe-block><div class="inner-wrapper"><div class="inner-wrapper">
+            <div class="box"></div>
+            <div class="first-line"><div class="title">Completed task</div><div class="all-controls-wrapper"><task-priority-indicator data-priority="2">!</task-priority-indicator></div></div>
+          </div></div></swipe-block></task>
+      </div>
+
       <!-- Dialog Showcase Preview -->
       <div class="demo-dialog-banner">
         <div class="dialog-title">Material 3 Dialog & Container Elevation</div>
@@ -692,6 +739,29 @@
         btnDark.classList.remove('active');
       }
     }
-  </script>
+      // URL params (used for README screenshots): ?theme=sage|coral|lavender|monochrome &mode=dark
+    // &ringAt=<seconds> freezes the tracked-task ring animation at that time
+    (function () {
+      const q = new URLSearchParams(location.search);
+      const t = q.get('theme');
+      const sel = document.getElementById('palette-select');
+      if (t) {
+        const file = t === 'baseline' ? 'google-material-3.css' : `google-material-3-${t}.css`;
+        sel.value = file;
+        switchThemeFile(file);
+      }
+      if (q.toString()) {
+        const nt = document.createElement('style');
+        nt.textContent = '*,*::before,*::after{transition:none!important}';
+        document.head.appendChild(nt);
+      }
+      if (q.get('mode') === 'dark') setMode('dark');
+      if (q.has('ringAt')) {
+        const st = document.createElement('style');
+        st.textContent = `.box::before{animation-delay:-${parseFloat(q.get('ringAt'))}s!important;animation-play-state:paused!important}`;
+        document.head.appendChild(st);
+      }
+    })();
+</script>
 </body>
 </html>

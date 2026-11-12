@@ -20,6 +20,44 @@
 
 ---
 
+## 📸 Screenshots
+
+Every theme ships with light and dark mode in the same file.
+
+| Light | Dark |
+| :---: | :---: |
+| ![Baseline theme, light mode](docs/images/hero-light.png) | ![Baseline theme, dark mode](docs/images/hero-dark.png) |
+
+### All five palettes
+
+![Cycling through the five palettes in light and dark mode](docs/images/palettes.gif)
+
+<details>
+<summary>Static grids (light and dark)</summary>
+
+![All palettes, light mode](docs/images/palettes-light.jpg)
+![All palettes, dark mode](docs/images/palettes-dark.jpg)
+
+</details>
+
+### Priority stripes, overdue, selected and done states
+
+Task cards get a coloured stripe by priority. Overdue, selected, tracked and completed tasks each keep their own look, and subtasks sit on an inset rail.
+
+| Light | Dark |
+| :---: | :---: |
+| ![Task states, light mode](docs/images/priority-stripes-light.png) | ![Task states, dark mode](docs/images/priority-stripes-dark.png) |
+
+### Tracked-task ring
+
+A soft light travels around the edge of the task you are currently timing. It switches off automatically when your system has *reduce motion* enabled.
+
+![Animated ring around the tracked task](docs/images/tracked-task-ring.gif)
+
+> Screenshots are rendered from [`preview.html`](./preview.html) (a mock of Super Productivity's real markup), not from the app itself. Regenerate them with `bash scripts/capture-docs.sh` (needs Chrome, ImageMagick and ffmpeg).
+
+---
+
 ## 🎨 Theme Variants
 
 | Theme File | Palette Flavor | Description | Best Suited For |
@@ -97,6 +135,7 @@ You can test and preview all theme variants and toggle between Light and Dark mo
    npm run preview
    ```
 2. Navigate to `http://localhost:3000` to interact with the mock Super Productivity UI.
+3. Optional URL parameters (use any static server, e.g. `python3 -m http.server`): `preview.html?theme=sage&mode=dark`, where `theme` is `baseline`, `sage`, `coral`, `lavender` or `monochrome`.
 
 ---
 
